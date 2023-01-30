@@ -1638,8 +1638,9 @@ server:
     # -- Additional ingress annotations
     annotations: #{}
       cert-manager.io/cluster-issuer: "letsencrypt-production"
-      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+      ingress.kubernetes.io/force-ssl-redirect: "true"
       nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+      # kubernetes.io/ingress.class: nginx
     # -- Additional ingress labels
     labels: {}
     # -- Defines which ingress controller will implement the resource
@@ -1664,13 +1665,13 @@ server:
         pathType: Prefix
         backend:
           service:
-            name: argocd-server
+            name: argo-cd-server
             port:
               name: https
 
     # -- Ingress TLS configuration
     tls: #[]
-      - secretName: blackops_myddns_me
+      - secretName: blackops-myddns-me
         hosts: 
           - blackops.myddns.me
       # - secretName: your-certificate-name
@@ -2469,19 +2470,30 @@ notifications:
 
   metrics:
     # -- Enables prometheus metrics server
-    enabled: false
+    enabled: true
     # -- Metrics port
     port: 9001
     service:
+      type: ClusterIP
       # -- Metrics service annotations
-      annotations: {}
+      annotations: #{}
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "{{ coalesce .Values.metrics.service.ports.metrics .Values.metrics.service.port }}"
       # -- Metrics service labels
       labels: {}
       # -- Metrics service port name
       portName: http-metrics
     serviceMonitor:
       # -- Enable a prometheus ServiceMonitor
-      enabled: false
+      enabled: true
+
+      namespace: monitoring
+
+      interval: 30s
+
+      scrapeTimeout: 1m
+
+      honorLabels: true
       # -- Prometheus ServiceMonitor selector
       selector: {}
         # prometheus: kube-prometheus

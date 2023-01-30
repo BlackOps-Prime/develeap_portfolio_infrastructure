@@ -6,9 +6,9 @@ resource "aws_eks_node_group" "self" {
   subnet_ids      = var.private_subnet[*].id
 
   scaling_config {
-    desired_size = 4
-    max_size     = 7
-    min_size     = 1
+    desired_size = 6
+    max_size     = 10
+    min_size     = 4
   }
 
   ami_type       = "AL2_x86_64" # AL2_x86_64, AL2_x86_64_GPU, AL2_ARM_64, CUSTOM
