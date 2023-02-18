@@ -1,5 +1,5 @@
 
-# Infrastructure As Code For ToDo App
+# Infrastructure As Code To Deploy A Kubernetes Cluster & A Helm ArgoCD Release
 
 This repository provides Terraform code to create a Kubernetes cluster and deploy ArgoCD in an ArgoCD namespace.
 ## Overview
