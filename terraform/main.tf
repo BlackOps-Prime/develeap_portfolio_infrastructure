@@ -51,7 +51,7 @@ resource "null_resource" "local_path_storage" {
 
   #  Create Local Storage Class
   provisioner "local-exec" {
-    command = "bash ${path.module}/script/storage_class.sh"
+    command = "bash ./script/storage_class.sh"
   }
 
 }
