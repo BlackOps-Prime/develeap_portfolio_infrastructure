@@ -15,18 +15,18 @@ module "eks" {
 # ArgoCD Deployment
 resource "helm_release" "argo-cd" {
 
-  name       = "argo-cd"
-  repository = "https://argoproj.github.io/argo-helm"
-  chart      = "argo-cd"
+  name             = "argo-cd"
+  repository       = "https://argoproj.github.io/argo-helm"
+  chart            = "argo-cd"
   create_namespace = true
-  cleanup_on_fail = true
-  version    = "5.19.x"
+  cleanup_on_fail  = true
+  version          = "5.19.x"
 
   values = [
     file("${path.module}./argo-cd/values.yaml")
   ]
 
-  namespace = "argocd"
+  namespace  = "argocd"
   depends_on = [null_resource.local_path_storage]
 }
 

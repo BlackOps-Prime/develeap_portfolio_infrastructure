@@ -44,7 +44,7 @@ provider "helm" {
     cluster_ca_certificate = base64decode(module.eks.kubeconfig-certificate-authority-data)
     host                   = data.aws_eks_cluster.cluster.endpoint
     token                  = data.aws_eks_cluster_auth.cluster.token
-    config_path = "~/.kube/config"
+    config_path            = "~/.kube/config"
     exec {
       api_version = "client.authentication.k8s.io/v1"
       args        = ["eks", "get-token", "--cluster-name", data.aws_eks_cluster.cluster.name]
@@ -58,7 +58,7 @@ provider "kubernetes" {
   cluster_ca_certificate = base64decode(module.eks.kubeconfig-certificate-authority-data)
   host                   = data.aws_eks_cluster.cluster.endpoint
   token                  = data.aws_eks_cluster_auth.cluster.token
-  config_path = "~/.kube/config"
+  config_path            = "~/.kube/config"
 }
 
 
